@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const url = require('url')
 const yargs = require('yargs')
 const chalk = require('chalk')
 const figures = require('figures')
@@ -17,6 +18,8 @@ const title = config.title
 const description = config.description
 const themeColor = config.themeColor
 const favicon = config.favicon
+const shareFacebook = url.resolve(config.url, config.share.facebook)
+const shareTwitter = url.resolve(config.url, config.share.twitter)
 const stylesFile = path.join(config.styles.outputDir, config.styles.outputFile)
 const scriptsFile = path.join(
   config.scripts.outputDir,
@@ -32,6 +35,8 @@ function compileFile(file, done) {
       description,
       themeColor,
       favicon,
+      shareFacebook,
+      shareTwitter,
       stylesFile,
       scriptsFile,
     })

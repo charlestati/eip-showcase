@@ -1,4 +1,5 @@
 module.exports = {
+  url: 'https://kipfit.io/',
   title: 'Kipfit',
   description: 'Kipfit',
   themeColor: '#ffffff',
@@ -6,6 +7,10 @@ module.exports = {
     type: 'image/png',
     size: '16x16 32x32 64x64',
     path: 'images/favicon.png',
+  },
+  share: {
+    facebook: 'images/share_facebook.png',
+    twitter: 'images/share_twitter.png',
   },
   sourceDir: 'src/',
   distDir: 'dist/',
