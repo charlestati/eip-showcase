@@ -1,6 +1,6 @@
 module.exports = {
   title: 'Kipfit',
-  description: '',
+  description: 'Kipfit',
   themeColor: '#ffffff',
   favicon: {
     type: 'image/png',
