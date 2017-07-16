@@ -15,14 +15,14 @@ const outputDir = path.join(config.distDir, config.images.outputDir)
 
 const argv = yargs.argv
 
-function build() {
-  console.log(chalk.bold.blue(`${figures.pointer} Building images`))
+function minify() {
+  console.log(chalk.bold.blue(`${figures.pointer} Minifying images`))
 
   imagemin([path.join(sourceDir, '*.{jpg,png}')], outputDir, {
     plugins: [imageminJpegtran(), imageminPngquant({ quality: '90-100' })],
   })
     .then(() => {
-      console.log(chalk.bold.green(`${figures.tick} Images built`))
+      console.log(chalk.bold.green(`${figures.tick} Images minified`))
     })
     .catch(error =>
       console.log(chalk.bold.red(`${figures.cross} ${error.toString()}`))
@@ -30,10 +30,12 @@ function build() {
 }
 
 function copy() {
+  console.log(chalk.bold.blue(`${figures.pointer} Copying images`))
+
   fs
     .copy(sourceDir, outputDir)
     .then(() => {
-      console.log(chalk.bold.green(`${figures.tick} Images built`))
+      console.log(chalk.bold.green(`${figures.tick} Images copied`))
     })
     .catch(error => {
       console.log(chalk.bold.red(`${figures.cross} ${error.toString()}`))
@@ -41,9 +43,9 @@ function copy() {
 }
 
 if (argv.watch) {
-  watch.watchTree(sourceDir, build)
+  watch.watchTree(sourceDir, copy)
 } else if (argv.minify) {
-  build()
+  minify()
 } else {
   copy()
 }

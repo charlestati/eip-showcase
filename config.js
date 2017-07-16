@@ -34,4 +34,8 @@ module.exports = {
     sourceDir: 'images/',
     outputDir: 'images/',
   },
+  svg: {
+    sourceDir: 'svg/',
+    outputDir: 'svg/',
+  },
 }

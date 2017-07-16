@@ -1,30 +1,32 @@
 {
   "private": true,
   "scripts": {
-    "clean": "rimraf \"dist/fonts/*\" \"dist/images/*\" \"dist/scripts/*\" \"dist/styles/*\" \"dist/*.html\"",
-    "setup": "mkdirp dist/fonts/ dist/images/ dist/scripts/ dist/styles/",
-    "dev": "npm-run-all clean setup --parallel \"dev:*\"",
+    "clean": "node bin/clean",
+    "setup": "node bin/setup",
+    "dev": "npm-run-all clean setup svg --parallel \"dev:*\"",
     "dev:fonts": "npm run prod:fonts",
-    "dev:images": "node bin/build-images",
+    "dev:images": "node bin/copy-images",
     "dev:scripts": "node bin/build-scripts",
     "dev:styles": "node bin/build-styles",
     "dev:templates": "node bin/build-templates",
-    "prod": "npm-run-all clean setup --parallel \"prod:*\"",
+    "prod": "npm-run-all clean setup svg --parallel \"prod:*\"",
     "prod:fonts": "cpx \"src/fonts/**/*\" dist/fonts/",
-    "prod:images": "node bin/build-images --minify",
+    "prod:images": "node bin/copy-images --minify",
     "prod:scripts": "node bin/build-scripts --minify",
     "prod:styles": "node bin/build-styles --minify",
     "prod:templates": "node bin/build-templates --minify",
-    "watch": "npm-run-all clean setup --parallel \"watch:*\"",
+    "watch": "npm-run-all clean setup svg --parallel \"watch:*\"",
     "watch:fonts": "cpx --watch \"src/fonts/**/*\" dist/fonts/",
-    "watch:images": "node bin/build-images --watch",
+    "watch:images": "node bin/copy-images --watch",
     "watch:scripts": "node bin/build-scripts --watch",
     "watch:styles": "node bin/build-styles --watch",
     "watch:templates": "node bin/build-templates --watch",
+    "svg": "node bin/minify-svg",
     "serve": "node bin/serve",
-    "prettier": "prettier --trailing-comma es5 --single-quote --no-semi --write \"src/scripts/**/*.js\"",
-    "start": "npm-run-all clean setup --parallel watch:* serve",
-    "test": "eslint src/scripts/"
+    "lint": "eslint --fix \"src/scripts/**/*.js\"",
+    "start": "npm-run-all clean setup svg --parallel \"watch:*\" serve",
+    "test": "eslint src/scripts/",
+    "precommit": "lint-staged"
   },
   "dependencies": {},
   "devDependencies": {
@@ -42,17 +44,20 @@
     "figures": "^2.0.0",
     "fs-extra": "^4.0.0",
     "html-minifier": "^3.4.3",
+    "husky": "^0.14.3",
     "imagemin": "^5.3.1",
     "imagemin-jpegtran": "^5.0.2",
     "imagemin-pngquant": "^5.0.1",
+    "imagemin-svgo": "^5.2.2",
+    "lint-staged": "^4.0.1",
     "mkdirp": "^0.5.1",
     "node-sass": "^4.5.2",
     "npm-run-all": "^4.0.2",
     "postcss": "^6.0.1",
-    "prettier": "^1.5.2",
+    "prettier": "^1.5.3",
     "pug": "^2.0.0-rc.2",
     "rimraf": "^2.6.1",
-    "uglify-js": "^3.0.15",
+    "uglify-js": "^3.0.25",
     "watch": "^1.0.2",
     "watchify": "^3.9.0",
     "yargs": "^8.0.1"
@@ -103,6 +108,18 @@
           "semi": false
         }
       ]
+    },
+    "parserOptions": {
+      "sourceType": "module"
     }
+  },
+  "eslintIgnore": [
+    "src/scripts/vendor/"
+  ],
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }

@@ -30,16 +30,22 @@ const argv = yargs.argv
 
 function compileFile(file, done) {
   if (path.extname(file) === '.pug') {
-    let html = pug.renderFile(path.join(sourceDir, file), {
-      title,
-      description,
-      themeColor,
-      favicon,
-      shareFacebook,
-      shareTwitter,
-      stylesFile,
-      scriptsFile,
-    })
+    let html = ''
+    try {
+      html = pug.renderFile(path.join(sourceDir, file), {
+        title,
+        description,
+        themeColor,
+        favicon,
+        shareFacebook,
+        shareTwitter,
+        stylesFile,
+        scriptsFile,
+      })
+    } catch (error) {
+      done(error)
+      return
+    }
     if (argv.minify) {
       const options = {
         removeComments: true,
@@ -80,6 +86,7 @@ function build() {
 
 if (argv.watch) {
   watch.watchTree(sourceDir, build)
+  watch.watchTree(path.join(config.sourceDir, config.svg.sourceDir), build)
 } else {
   build()
 }

@@ -1,3 +1,51 @@
-body {
-  background-color: #ffffff;
+// Core variables and mixins
+@import "vendor/bootstrap/variables";
+@import "vendor/bootstrap/mixins";
+// Custom variables
+@import "variables";
+// Reset and dependencies
+@import "vendor/bootstrap/normalize";
+@import "vendor/bootstrap/print";
+// Core CSS
+@import "vendor/bootstrap/reboot";
+@import "vendor/bootstrap/type";
+@import "vendor/bootstrap/images";
+@import "vendor/bootstrap/grid";
+// Components
+@import "vendor/bootstrap/transitions";
+@import "vendor/bootstrap/nav";
+@import "vendor/bootstrap/navbar";
+// Utility classes
+@import "vendor/bootstrap/utilities";
+
+.navbar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+}
+
+.navbar-logo {
+  svg {
+    width: auto;
+    height: 30px;
+    vertical-align: middle;
+  }
+
+  path {
+    //fill: #f4f4f4;
+    fill: #ff7849;
+  }
+}
+
+.section {
+  height: 100vh;
+}
+
+.section-1 {
+  background-color: #13ce66;
+}
+
+.section-2 {
+  background-color: #1fb6ff;
 }
