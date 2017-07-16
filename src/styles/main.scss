@@ -18,6 +18,10 @@
 // Utility classes
 @import "vendor/bootstrap/utilities";
 
+body {
+  overflow: visible;
+}
+
 .navbar {
   position: absolute;
   left: 0;
