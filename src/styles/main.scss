@@ -33,8 +33,7 @@
   }
 
   path {
-    //fill: #f4f4f4;
-    fill: #ff7849;
+    fill: #f4f4f4;
   }
 }
 
@@ -43,9 +42,26 @@
 }
 
 .section-1 {
-  background-color: #13ce66;
+  background: linear-gradient(60deg, #e62f17 0%, #f2bb30 100%) no-repeat scroll center center/cover;
 }
 
 .section-2 {
-  background-color: #1fb6ff;
+  background: linear-gradient(60deg, #0a3466 0%, #17b9e6 100%) no-repeat scroll center center/cover;
+}
+
+.section-3 {
+  background: linear-gradient(60deg, #17b9e6 0%, #82d9b8 100%) no-repeat scroll center center/cover;
+}
+
+@media (min-width: 992px) {
+  .navbar-toggleable-md .navbar-nav .nav-link {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.footer {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background-color: #f6f9fc;
 }

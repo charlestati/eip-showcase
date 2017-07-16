@@ -1,0 +1,14 @@
+$navbar-padding-y: 20px;
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1040px
+);
+@include _assert-ascending($container-max-widths, "$container-max-widths");
+
+$font-size-base: 1.08rem;
+
+$navbar-inverse-color: rgba($white, .75);
+$navbar-inverse-hover-color: rgba($white, 1);

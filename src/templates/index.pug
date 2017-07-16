@@ -1,24 +1,23 @@
 extends includes/layout
 
 block content
-  nav.navbar.navbar-toggleable-md.navbar-light
-    .container
+  .container
+    nav.navbar.navbar-toggleable-md.navbar-inverse
       button.navbar-toggler.navbar-toggler-right(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
         span.navbar-toggler-icon
       a.navbar-brand(href='#')
         .navbar-logo
           include ../svg/logo.svg
       #navbarNav.collapse.navbar-collapse
-        ul.navbar-nav
-          li.nav-item.active
-            a.nav-link(href='#')
-              | Home
-              span.sr-only (current)
+        ul.navbar-nav.ml-auto
+          li.nav-item
+            a.nav-link(href='#') Home
           li.nav-item
             a.nav-link(href='#') Features
           li.nav-item
             a.nav-link(href='#') Pricing
-          li.nav-item
-            a.nav-link.disabled(href='#') Disabled
   section.section.section-1
   section.section.section-2
+  section.section.section-3
+  footer.footer
+    .container
