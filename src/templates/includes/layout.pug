@@ -16,9 +16,8 @@ html(lang='fr')
         overflow: hidden;
       }
 
-      .loader {
-        z-index: 99;
-        position: absolute;
+      #loader {
+        position: fixed;
         left: 0;
         right: 0;
         top: 0;
@@ -28,28 +27,32 @@ html(lang='fr')
     noscript#deferred-styles
       link(rel='stylesheet', href=stylesFile)
     script.
+      function hideLoader() {
+        if (window.jQuery) {
+          window.jQuery('#loader').fadeOut()
+        } else {
+          document.getElementById('loader').style.display = 'none'
+        }
+      }
+
       function loadDeferredStyles() {
         var addStylesNode = document.getElementById('deferred-styles')
         var replacement = document.createElement('div')
         replacement.innerHTML = addStylesNode.textContent
-        document.body.appendChild(replacement)
+        var link = replacement.firstChild
+        link.onload = hideLoader
+        document.body.appendChild(link)
         addStylesNode.parentElement.removeChild(addStylesNode)
       }
-      var raf =
-        requestAnimationFrame ||
-        mozRequestAnimationFrame ||
-        webkitRequestAnimationFrame ||
-        msRequestAnimationFrame
-      if (raf) {
-        raf(function() {
-          window.setTimeout(loadDeferredStyles, 0)
-        })
+
+      if (document.readyState === 'complete') {
+        loadDeferredStyles()
       } else {
         window.addEventListener('load', loadDeferredStyles)
       }
     link(rel='icon', type=favicon.type, sizes=favicon.size, href=favicon.path)
   body
-    .loader
+    #loader
     block content
-    script(src='//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js')
     script(src=scriptsFile)

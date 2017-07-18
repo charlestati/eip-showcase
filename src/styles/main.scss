@@ -69,3 +69,27 @@ body {
   padding-bottom: 3rem;
   background-color: #f6f9fc;
 }
+
+.navbar-nav .nav-item .nav-link {
+  position: relative;
+
+  &:before {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    color: transparent;
+    content: '•';
+    text-shadow: 0 0 transparent;
+    font-size: 1.2em;
+    transition: text-shadow 0.3s, color 0.3s;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  @include hover-focus {
+    &:before {
+      color: #fff;
+      text-shadow: 10px 0 #fff, -10px 0 #fff;
+    }
+  }
+}
