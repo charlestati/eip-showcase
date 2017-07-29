@@ -1,6 +1,8 @@
 import './vendor/bootstrap/collapse'
 
-function run() {}
+function run() {
+  handleAnchors()
+}
 
 // todo What if the event is never triggered? (blocked asset)
 if (document.readyState === 'complete') {

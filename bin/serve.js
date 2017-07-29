@@ -2,12 +2,18 @@ const BrowserSync = require('browser-sync')
 
 const config = require('../config')
 
-const bs = BrowserSync.create()
+let bs
 
-bs.init({
-  server: config.distDir,
-  files: config.distDir,
-  ghostMode: false,
-  notify: false,
-  open: false,
-})
+if (require.main === module) {
+  bs = BrowserSync.create()
+
+  bs.init({
+    server: config.distDir,
+    files: config.distDir,
+    ghostMode: false,
+    notify: false,
+    open: false,
+  })
+}
+
+module.exports = bs

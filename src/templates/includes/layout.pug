@@ -11,49 +11,15 @@ html(lang='fr')
     meta(name='msapplication-tap-highlight', content='no')
     // Color the status bar on mobile devices
     meta(name='theme-color', content=themeColor)
-    style.
-      body {
-        overflow: hidden;
-      }
-
-      #loader {
-        z-index: 2000;
-        position: fixed;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        background: linear-gradient(60deg, #e62f17 0%, #f2bb30 100%) no-repeat scroll center center/cover;
-      }
+    include /html/favicons.html
+    style
+      include /styles/inline.css
     noscript#deferred-styles
       link(rel='stylesheet', href=stylesFile)
-    script.
-      function hideLoader() {
-        if (window.jQuery) {
-          window.jQuery('#loader').fadeOut()
-        } else {
-          document.getElementById('loader').style.display = 'none'
-        }
-      }
-
-      function loadDeferredStyles() {
-        var addStylesNode = document.getElementById('deferred-styles')
-        var replacement = document.createElement('div')
-        replacement.innerHTML = addStylesNode.textContent
-        var link = replacement.firstChild
-        link.onload = hideLoader
-        document.body.appendChild(link)
-        addStylesNode.parentElement.removeChild(addStylesNode)
-      }
-
-      if (document.readyState === 'complete') {
-        loadDeferredStyles()
-      } else {
-        window.addEventListener('load', loadDeferredStyles)
-      }
-    link(rel='icon', type=favicon.type, sizes=favicon.size, href=favicon.path)
+    script
+      include /scripts/inline.js
   body
     #loader
     block content
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js')
-    script(src=scriptsFile)
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js', defer)
+    script(src=scriptsFile, defer)

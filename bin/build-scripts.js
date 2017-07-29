@@ -1,30 +1,23 @@
-const fs = require('fs')
 const path = require('path')
 const yargs = require('yargs')
-const chalk = require('chalk')
-const figures = require('figures')
 const browserify = require('browserify')
 const watchify = require('watchify')
 const UglifyJS = require('uglify-js')
 
+const { logInfo, logSuccess, logError } = require('./logging-tools')
+const { writeFile } = require('./fs-tools')
+
 const config = require('../config')
 
-const sourceFile = path.join(
-  config.sourceDir,
-  config.scripts.sourceDir,
-  config.scripts.sourceFile
-)
-
-const outputFile = path.join(
-  config.distDir,
-  config.scripts.outputDir,
-  config.scripts.outputFile
-)
+const inputDir = path.join(config.sourceDir, config.scripts.inputDir)
+const inputFile = path.join(inputDir, config.scripts.inputFile)
+const outputDir = path.join(config.distDir, config.scripts.outputDir)
+const outputFile = path.join(outputDir, config.scripts.outputFile)
 
 const argv = yargs.argv
 
 const b = browserify({
-  entries: sourceFile,
+  entries: inputFile,
   cache: {},
   packageCache: {},
   debug: !argv.minify,
@@ -32,14 +25,29 @@ const b = browserify({
 
 if (argv.watch) {
   b.plugin(watchify)
-  b.on('update', build)
+  b.on('update', handleChange)
+}
+
+build()
+
+function build() {
+  logInfo('Building scripts')
+  return bundleScripts()
+    .then(minifyScripts)
+    .then(data => writeFile(outputFile, data))
+    .then(() => logSuccess('Scripts built'))
+    .catch(error => logError(error.toString()))
 }
 
 function bundleScripts() {
   return new Promise((resolve, reject) => {
-    b.bundle(
-      (error, buffer) => (error ? reject(error) : resolve(buffer.toString()))
-    )
+    b.bundle((error, buffer) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve(buffer.toString())
+      }
+    })
   })
 }
 
@@ -58,22 +66,6 @@ function minifyScripts(data) {
   })
 }
 
-function writeScripts(data) {
-  return new Promise((resolve, reject) => {
-    fs.writeFile(outputFile, data, error => (error ? reject(error) : resolve()))
-  })
+function handleChange() {
+  build()
 }
-
-function build() {
-  console.log(chalk.bold.blue(`${figures.pointer} Building scripts`))
-
-  bundleScripts()
-    .then(minifyScripts)
-    .then(writeScripts)
-    .then(() => console.log(chalk.bold.green(`${figures.tick} Scripts built`)))
-    .catch(error =>
-      console.log(chalk.bold.red(`${figures.cross} ${error.toString()}`))
-    )
-}
-
-build()

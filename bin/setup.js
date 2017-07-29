@@ -1,30 +1,32 @@
-const chalk = require('chalk')
-const figures = require('figures')
-const mkdirp = require('mkdirp')
+const path = require('path')
 
-function makeDirectory(directory) {
-  return new Promise((resolve, reject) => {
-    mkdirp(directory, error => (error ? reject(error) : resolve()))
-  })
-}
+const { logInfo, logSuccess, logError } = require('./logging-tools')
+const { makeDirectory } = require('./fs-tools')
+
+const config = require('../config')
+
+setup()
 
 function setup() {
-  console.log(chalk.bold.blue(`${figures.pointer} Creating directories`))
+  logInfo('Creating directories')
 
   const directories = [
-    'dist/fonts/',
-    'dist/images/',
-    'dist/scripts/',
-    'dist/styles/',
+    config.favicon.outputHtmlDir,
+    config.svg.outputDir,
+    config.favicon.outputDir,
+    config.fonts.outputDir,
+    config.images.outputDir,
+    path.join(config.distDir, config.scripts.outputDir),
+    path.join(config.distDir, config.styles.outputDir),
+    path.join(config.tmpDir, config.scripts.outputDir),
+    path.join(config.tmpDir, config.styles.outputDir),
   ]
 
   Promise.all(directories.map(makeDirectory))
     .then(() => {
-      console.log(chalk.bold.green(`${figures.tick} Directories created`))
+      logSuccess('Directories created')
     })
     .catch(error => {
-      console.log(chalk.bold.red(`${figures.cross} ${error.toString()}`))
+      logError(error.toString())
     })
 }
-
-setup()

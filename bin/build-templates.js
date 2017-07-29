@@ -1,92 +1,98 @@
-const fs = require('fs')
 const path = require('path')
 const url = require('url')
 const yargs = require('yargs')
-const chalk = require('chalk')
-const figures = require('figures')
-const watch = require('watch')
+const gaze = require('gaze')
 const async = require('async')
 const pug = require('pug')
 const minify = require('html-minifier').minify
 
+const { logInfo, logSuccess, logError } = require('./logging-tools')
+const { readDirectory, writeFile } = require('./fs-tools')
+
 const config = require('../config')
 
-const sourceDir = path.join(config.sourceDir, config.templates.sourceDir)
-const outputDir = path.join(config.distDir, config.templates.outputDir)
+const inputDir = config.templates.inputDir
+const outputDir = config.templates.outputDir
 
-const title = config.title
-const description = config.description
-const themeColor = config.themeColor
-const favicon = config.favicon
-const shareFacebook = url.resolve(config.url, config.share.facebook)
-const shareTwitter = url.resolve(config.url, config.share.twitter)
-const stylesFile = path.join(config.styles.outputDir, config.styles.outputFile)
-const scriptsFile = path.join(
-  config.scripts.outputDir,
-  config.scripts.outputFile
-)
+const pugVariables = {
+  basedir: config.tmpDir,
+  title: config.title,
+  description: config.description,
+  shareFacebook: url.resolve(config.url, config.share.facebook),
+  shareTwitter: url.resolve(config.url, config.share.twitter),
+  stylesFile: path.join(config.styles.outputDir, config.styles.outputFile),
+  scriptsFile: path.join(config.scripts.outputDir, config.scripts.outputFile),
+}
+
+const minifyOptions = {
+  removeComments: true,
+  removeAttributeQuotes: true,
+  removeRedundantAttributes: true,
+  removeStyleLinkTypeAttributes: true,
+  removeScriptTypeAttributes: true,
+  collapseWhitespace: true,
+  conservativeCollapse: true,
+}
 
 const argv = yargs.argv
 
-function compileFile(file, done) {
-  if (path.extname(file) === '.pug') {
-    let html = ''
-    try {
-      html = pug.renderFile(path.join(sourceDir, file), {
-        title,
-        description,
-        themeColor,
-        favicon,
-        shareFacebook,
-        shareTwitter,
-        stylesFile,
-        scriptsFile,
-      })
-    } catch (error) {
-      done(error)
-      return
-    }
-    if (argv.minify) {
-      const options = {
-        removeComments: true,
-        removeAttributeQuotes: true,
-        removeRedundantAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        removeScriptTypeAttributes: true,
-        collapseWhitespace: true,
-        conservativeCollapse: true,
-      }
-      html = minify(html, options)
-    }
-    const htmlFile = path.basename(file, '.pug') + '.html'
-    const outputFile = path.join(outputDir, htmlFile)
-    fs.writeFile(outputFile, html, done)
-  } else {
-    done()
-  }
+if (argv.watch) {
+  watch()
+} else {
+  build()
 }
 
-function build() {
-  console.log(chalk.bold.blue(`${figures.pointer} Building templates`))
-
-  fs.readdir(sourceDir, (error, files) => {
+function watch() {
+  const prey = [
+    path.join(inputDir, '**', '*'),
+    path.join(config.svg.outputDir, '**', '*'),
+    path.join(config.favicon.outputHtmlDir, '**', '*'),
+    path.join(config.tmpDir, config.scripts.outputDir, '**', '*'),
+    path.join(config.tmpDir, config.styles.outputDir, '**', '*'),
+  ]
+  gaze(prey, (error, watcher) => {
     if (error) {
-      console.log(chalk.bold.red(`${figures.cross} ${error.toString()}`))
+      logError(error.toString())
     } else {
-      async.each(files, compileFile, error => {
-        if (error) {
-          console.log(chalk.bold.red(`${figures.cross} ${error.toString()}`))
-        } else {
-          console.log(chalk.bold.green(`${figures.tick} Templates built`))
-        }
-      })
+      watcher.on('changed', handleChange)
+      watcher.on('added', handleChange)
     }
   })
 }
 
-if (argv.watch) {
-  watch.watchTree(sourceDir, build)
-  watch.watchTree(path.join(config.sourceDir, config.svg.sourceDir), build)
-} else {
+function handleChange() {
   build()
+}
+
+function build() {
+  logInfo('Building templates')
+  return readDirectory(inputDir)
+    .then(files => {
+      async.each(files, compileFile, error => {
+        if (error) {
+          logError(error.toString())
+        } else {
+          logSuccess('Templates built')
+        }
+      })
+    })
+    .catch(error => logError(error.toString()))
+}
+
+function compileFile(file, done) {
+  if (path.extname(file) === '.pug') {
+    try {
+      let html = pug.renderFile(path.join(inputDir, file), pugVariables)
+      if (argv.minify) {
+        html = minify(html, minifyOptions)
+      }
+      const htmlFile = path.basename(file, '.pug') + '.html'
+      const outputFile = path.join(outputDir, htmlFile)
+      writeFile(outputFile, html).then(done).catch(done)
+    } catch (error) {
+      done(error)
+    }
+  } else {
+    done()
+  }
 }

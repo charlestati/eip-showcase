@@ -3,25 +3,26 @@ const yargs = require('yargs')
 const gaze = require('gaze')
 
 const { logInfo, logSuccess, logError } = require('./logging-tools')
-const { minifyImageFiles } = require('./image-tools')
+const { minifySvgFiles } = require('./image-tools')
 const { copyFile } = require('./fs-tools')
 
 const config = require('../config')
 
-const inputDir = config.images.inputDir
-const outputDir = config.images.outputDir
-const imagesGlob = path.join(inputDir, '**', '*')
+const inputDir = config.svg.inputDir
+const outputDir = config.svg.outputDir
 
 const argv = yargs.argv
 
 if (argv.watch) {
   watch()
+} else if (argv.minify) {
+  minifyAllSvg()
 } else {
-  build()
+  copyAllSvg()
 }
 
 function watch() {
-  gaze(imagesGlob, (error, watcher) => {
+  gaze(path.join(inputDir, '**', '*'), (error, watcher) => {
     if (error) {
       logError(error.toString())
     } else {
@@ -33,21 +34,21 @@ function watch() {
 
 function handleChange(filepath) {
   if (argv.minify) {
-    minifyImage(filepath)
+    minifySvg(filepath)
   } else {
-    copyImage(filepath)
+    copySvg(filepath)
   }
 }
 
-function minifyImage(filepath) {
+function minifySvg(filepath) {
   const basename = path.basename(filepath)
   logInfo(`Minifying ${basename}`)
-  minifyImageFiles([filepath], outputDir)
+  minifySvgFiles([filepath], outputDir)
     .then(() => logSuccess(`${basename} minified`))
     .catch(error => logError(error.toString()))
 }
 
-function copyImage(filepath) {
+function copySvg(filepath) {
   const basename = path.basename(filepath)
   logInfo(`Copying ${basename}`)
   copyFile(filepath, path.join(outputDir, basename))
@@ -55,24 +56,16 @@ function copyImage(filepath) {
     .catch(error => logError(error.toString()))
 }
 
-function build() {
-  if (argv.minify) {
-    minifyAllImages()
-  } else {
-    copyAllImages()
-  }
-}
-
-function minifyAllImages() {
-  logInfo('Minifying images')
-  minifyImageFiles([imagesGlob], outputDir)
-    .then(() => logSuccess('Images minified'))
+function minifyAllSvg() {
+  logInfo('Minifying SVG files')
+  minifySvgFiles([path.join(inputDir, '*.svg')], outputDir)
+    .then(() => logSuccess('SVG files minified'))
     .catch(error => logError(error.toString()))
 }
 
-function copyAllImages() {
-  logInfo('Copying images')
+function copyAllSvg() {
+  logInfo('Copying SVG files')
   copyFile(inputDir, outputDir)
-    .then(() => logSuccess('Images copied'))
+    .then(() => logSuccess('SVG files copied'))
     .catch(error => logError(error.toString()))
 }

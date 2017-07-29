@@ -1,0 +1,13 @@
+body {
+  overflow: hidden;
+}
+
+#loader {
+  z-index: 2000;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(60deg, #e62f17 0%, #f2bb30 100%) no-repeat scroll center center/cover;
+}

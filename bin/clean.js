@@ -1,31 +1,21 @@
 const chalk = require('chalk')
 const figures = require('figures')
-const rimraf = require('rimraf')
 
-function removeFile(file) {
-  return new Promise((resolve, reject) => {
-    rimraf(file, [], error => (error ? reject(error) : resolve()))
-  })
-}
+const { logInfo, logSuccess, logError } = require('./logging-tools')
+const { removeFile } = require('./fs-tools')
 
-function clean() {
-  console.log(chalk.bold.blue(`${figures.pointer} Cleaning directory`))
-
-  const files = [
-    'dist/fonts/*',
-    'dist/images/*',
-    'dist/scripts/*',
-    'dist/styles/*',
-    'dist/*.html',
-  ]
-
-  Promise.all(files.map(removeFile))
-    .then(() => {
-      console.log(chalk.bold.green(`${figures.tick} Directory cleaned`))
-    })
-    .catch(error => {
-      console.log(chalk.bold.red(`${figures.cross} ${error.toString()}`))
-    })
-}
+const config = require('../config')
 
 clean()
+
+function clean() {
+  logInfo('Cleaning app')
+  const files = [config.distDir, config.tmpDir]
+  Promise.all(files.map(removeFile))
+    .then(() => {
+      logSuccess('App cleaned')
+    })
+    .catch(error => {
+      logError(error.toString())
+    })
+}

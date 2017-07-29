@@ -12,10 +12,9 @@ const { writeFile } = require('./fs-tools')
 const config = require('../config')
 
 const inputDir = path.join(config.sourceDir, config.styles.inputDir)
-const inputFile = path.join(inputDir, config.styles.inputFile)
-const outputDir = path.join(config.distDir, config.styles.outputDir)
-const outputFile = path.join(outputDir, config.styles.outputFile)
-const inlineInputFile = path.join(inputDir, config.styles.inlineInputFile)
+const inputFile = path.join(inputDir, config.styles.inlineInputFile)
+const outputDir = path.join(config.tmpDir, config.styles.outputDir)
+const outputFile = path.join(outputDir, config.styles.inlineOutputFile)
 
 const argv = yargs.argv
 
@@ -26,8 +25,7 @@ if (argv.watch) {
 }
 
 function watch() {
-  const prey = [path.join(inputDir, '**', '*'), `!${inlineInputFile}`]
-  gaze(prey, (error, watcher) => {
+  gaze(inputFile, (error, watcher) => {
     if (error) {
       logError(error.toString())
     } else {
@@ -42,11 +40,11 @@ function handleChange() {
 }
 
 function build() {
-  logInfo('Building styles')
+  logInfo('Building inline styles')
   return renderStyles()
     .then(postProcStyles)
     .then(data => writeFile(outputFile, data.css))
-    .then(() => logSuccess('Styles built'))
+    .then(() => logSuccess('Inline styles built'))
     .catch(error => logError(error.toString()))
 }
 
@@ -56,7 +54,6 @@ function renderStyles() {
       {
         file: inputFile,
         precision: 10,
-        sourceMapEmbed: !argv.minify,
       },
       (error, result) => {
         if (error) {

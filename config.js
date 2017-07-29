@@ -1,41 +1,110 @@
+const path = require('path')
+
+const appName = 'Kipfit'
+const appDescription = 'Kipfit'
+const appUrl = 'https://kipfit.io/'
+const themeColor = '#ffffff'
+const language = 'fr-FR'
+
+const sourceDir = 'src/'
+const tmpDir = '.tmp/'
+const distDir = 'dist/'
+
+const fontsDir = 'fonts/'
+const htmlDir = 'html/'
+const imagesDir = 'images/'
+const scriptsDir = 'scripts/'
+const staticDir = 'static/'
+const stylesDir = 'styles/'
+const svgDir = 'svg/'
+const templatesDir = 'templates/'
+
+const svgConfig = {
+  inputDir: path.join(sourceDir, svgDir),
+  outputDir: path.join(tmpDir, svgDir),
+}
+
+const fontsConfig = {
+  inputDir: path.join(sourceDir, fontsDir),
+  outputDir: path.join(distDir, fontsDir),
+}
+
+const imagesConfig = {
+  inputDir: path.join(sourceDir, imagesDir),
+  outputDir: path.join(distDir, imagesDir),
+}
+
+const templatesConfig = {
+  inputDir: path.join(sourceDir, templatesDir),
+  outputDir: distDir,
+}
+
+const shareConfig = {
+  facebook: path.join(imagesDir, 'share-facebook.png'),
+  twitter: path.join(imagesDir, 'share-twitter.png'),
+}
+
+const stylesConfig = {
+  inputDir: stylesDir,
+  inputFile: 'main.scss',
+  inlineInputFile: 'inline.scss',
+  outputDir: stylesDir,
+  outputFile: 'main.css',
+  inlineOutputFile: 'inline.css',
+}
+
+const scriptsConfig = {
+  inputDir: scriptsDir,
+  inputFile: 'main.js',
+  inlineInputFile: 'inline.js',
+  outputDir: scriptsDir,
+  outputFile: 'main.js',
+  inlineOutputFile: 'inline.js',
+}
+
+const faviconsConfig = {
+  inputDir: svgConfig.outputDir,
+  inputFile: 'favicon.svg',
+  outputDir: path.join(distDir, staticDir),
+  outputHtmlDir: path.join(tmpDir, htmlDir),
+  outputHtmlFile: 'favicons.html',
+  config: {
+    path: staticDir,
+    online: false,
+    icons: {
+      appleStartup: false,
+      coast: false,
+      firefox: false,
+      yandex: false,
+    },
+    appName: appName,
+    appDescription: appDescription,
+    developerName: appName,
+    developerURL: appUrl,
+    background: themeColor,
+    theme_color: themeColor,
+    lang: language,
+    display: 'standalone',
+    orientation: 'portrait',
+    start_url: '/?homescreen=1',
+    version: '1.0',
+  },
+}
+
 module.exports = {
-  url: 'https://kipfit.io/',
-  title: 'Kipfit',
-  description: 'Kipfit',
-  themeColor: '#ffffff',
-  favicon: {
-    type: 'image/png',
-    size: '16x16 32x32 64x64',
-    path: 'images/favicon.png',
-  },
-  share: {
-    facebook: 'images/share_facebook.png',
-    twitter: 'images/share_twitter.png',
-  },
-  sourceDir: 'src/',
-  distDir: 'dist/',
-  scripts: {
-    sourceDir: 'scripts/',
-    sourceFile: 'main.js',
-    outputDir: 'scripts/',
-    outputFile: 'scripts.js',
-  },
-  styles: {
-    sourceDir: 'styles/',
-    sourceFile: 'main.scss',
-    outputDir: 'styles/',
-    outputFile: 'styles.css',
-  },
-  templates: {
-    sourceDir: 'templates/',
-    outputDir: '',
-  },
-  images: {
-    sourceDir: 'images/',
-    outputDir: 'images/',
-  },
-  svg: {
-    sourceDir: 'svg/',
-    outputDir: 'svg/',
-  },
+  url: appUrl,
+  title: appName,
+  description: appDescription,
+  themeColor: themeColor,
+  sourceDir: sourceDir,
+  distDir: distDir,
+  tmpDir: tmpDir,
+  favicon: faviconsConfig,
+  fonts: fontsConfig,
+  images: imagesConfig,
+  scripts: scriptsConfig,
+  share: shareConfig,
+  styles: stylesConfig,
+  svg: svgConfig,
+  templates: templatesConfig,
 }
