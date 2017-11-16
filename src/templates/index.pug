@@ -1,21 +1,71 @@
 extends includes/layout
 
 block content
-  .container
-    nav.navbar.navbar-toggleable-md.navbar-inverse
-      button.navbar-toggler.navbar-toggler-right(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
-        span.navbar-toggler-icon
+  section#accueil.section
+    nav.navbar.navbar-expand-lg.navbar-dark
       a.navbar-brand(href='#')
         .navbar-logo
           include /svg/logo.svg
-      #navbarNav.collapse.navbar-collapse
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar-nav', aria-controls='navbar-nav', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbar-nav.collapse.navbar-collapse
         ul.navbar-nav.ml-auto
           li.nav-item
-            a.nav-link(href='#section-1') Home
+            a.nav-link.active(href='#accueil') Accueil
           li.nav-item
-            a.nav-link(href='#section-2') Features
+            a.nav-link(href='#projet') À propos
           li.nav-item
-            a.nav-link(href='#section-3') Pricing
-  section#section-1.section.section-1
-  section#section-2.section.section-2
-  section#section-3.section.section-3
+            a.nav-link(href='#jeux') Jeux
+          li.nav-item
+            a.nav-link(href='#applications') Applications
+          li.nav-item
+            a.nav-link(href='#hardware') Hardware
+    .hero.container
+      h1.headline Faire du sport en s'amusant
+      .bike-icon
+        include /svg/bike.svg
+    .row.no-gutters
+      .col-sm-6.col-md-5.col-lg-4
+        a.btn.btn-icon.btn-know-more.link-anchor(href='#equipe')
+          span.btn-text
+            span En savoir plus
+          span.btn-arrow
+            include /svg/arrow.svg
+  section#projet.section
+    .row.no-gutters
+      .col-sm-6.col-md-5.col-lg-4.sidebar-wrapper
+        nav.nav.flex-column.sidebar
+          .row.no-gutters
+            .offset-2.col-10
+              a.nav-link.active(href='#') Epitech
+              a.nav-link(href='#') EIP
+              a.nav-link(href='#') EIP
+              a.nav-link(href='#') EIP
+      .offset-lg-1.col-lg-6
+        .container.content
+          h2.title École pour l'informatique et les nouvelles technologies
+          p Epitech est une école d'informatique créée en 1999. Elle forme au métier d'Expert en Technologies de l'Information via une pédagogie innovante organisée en projets.
+          h2.title Epitech Innovative Project
+          p L'Epitech Innovative Project (EIP) est un projet entrepreneurial réalisé en groupe sanctionnant cinq années d'études à l'école Epitech. Il permet de se former sur les différentes composantes d'une entreprise : un business plan viable, un design attirant, une stratégie marketing efficace…
+          p L'EIP a deux buts : acquérir une expérience de gestion de projet par la pratique et constituer une carte de visite professionnelle.
+  section#jeux.section
+    .row.no-gutters
+      .col-md-6
+        img.img-fluid(src='images/placeholder.png', alt='Placeholder')
+      .col-md-6
+        p text
+  section#applications.section
+    .row.no-gutters
+      .col-md-6
+        p text
+      .col-md-6
+        img.img-fluid(src='images/placeholder.png', alt='Placeholder')
+  section#hardware.section
+    .container-fluid
+      .row
+        .col-md-6
+          p image
+        .col-md-6
+          p text
+  footer.footer
+    p by Bernar Novalyi from the Noun Project

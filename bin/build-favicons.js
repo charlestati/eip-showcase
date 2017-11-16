@@ -48,6 +48,8 @@ function build() {
 
 function buildFavicons() {
   return new Promise((resolve, reject) => {
+    resolve()
+    return // todo
     favicons(inputFile, config.favicon.config, (error, response) => {
       if (error) {
         reject(error)

@@ -1,7 +1,7 @@
 const path = require('path')
 const yargs = require('yargs')
-const gaze = require('gaze')
-const babel = require('babel-core')
+const browserify = require('browserify')
+const watchify = require('watchify')
 const UglifyJS = require('uglify-js')
 
 const { logInfo, logSuccess, logError } = require('./logging-tools')
@@ -11,6 +11,7 @@ const pjson = require('../package.json')
 const config = require('../config')
 
 const babelOptions = pjson.browserify.transform[0][1]
+babelOptions['presets'][0][1]['modules'] = false
 
 const inputDir = path.join(config.sourceDir, config.scripts.inputDir)
 const inputFile = path.join(inputDir, config.scripts.inlineInputFile)
@@ -19,59 +20,56 @@ const outputFile = path.join(outputDir, config.scripts.inlineOutputFile)
 
 const argv = yargs.argv
 
+const b = browserify({
+  entries: inputFile,
+  cache: {},
+  packageCache: {},
+  debug: false,
+})
+
 if (argv.watch) {
-  watch()
-} else {
-  build()
+  b.plugin(watchify)
+  b.on('update', handleChange)
 }
 
-function watch() {
-  gaze(inputFile, (error, watcher) => {
-    if (error) {
-      logError(error.toString())
-    } else {
-      watcher.on('changed', handleChange)
-      watcher.on('added', handleChange)
-    }
-  })
-}
-
-function handleChange() {
-  build()
-}
+build()
 
 function build() {
   logInfo('Building inline scripts')
-  return transformScripts()
+  return bundleScripts()
     .then(minifyScripts)
     .then(data => writeFile(outputFile, data))
     .then(() => logSuccess('Inline scripts built'))
-    .catch(error => logError(error))
+    .catch(error => logError(error.toString()))
 }
 
-function transformScripts() {
+function bundleScripts() {
   return new Promise((resolve, reject) => {
-    babel.transformFile(inputFile, babelOptions, (error, result) => {
+    b.bundle((error, buffer) => {
       if (error) {
         reject(error)
       } else {
-        resolve(result.code)
+        resolve(buffer.toString())
       }
     })
   })
 }
 
 function minifyScripts(data) {
-  if (argv.minify) {
-    return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
+    if (argv.minify) {
       const minified = UglifyJS.minify(data)
       if (minified.error) {
         reject(minified.error)
       } else {
         resolve(minified.code)
       }
-    })
-  } else {
-    return Promise.resolve(data)
-  }
+    } else {
+      resolve(data)
+    }
+  })
+}
+
+function handleChange() {
+  build()
 }

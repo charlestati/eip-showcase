@@ -1,8 +1,8 @@
 const path = require('path')
 
-const appName = 'Kipfit'
-const appDescription = 'Kipfit'
-const appUrl = 'https://kipfit.io/'
+const appName = 'SportsFun'
+const appDescription = 'SportsFun'
+const appUrl = 'http://eip.epitech.eu/2019/sportsfun/'
 const themeColor = '#ffffff'
 const language = 'fr-FR'
 
@@ -63,7 +63,7 @@ const scriptsConfig = {
 }
 
 const faviconsConfig = {
-  inputDir: svgConfig.outputDir,
+  inputDir: svgConfig.inputDir,
   inputFile: 'favicon.svg',
   outputDir: path.join(distDir, staticDir),
   outputHtmlDir: path.join(tmpDir, htmlDir),

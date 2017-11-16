@@ -1,23 +1,75 @@
-function hideLoader() {
-  if (window.jQuery) {
-    window.jQuery('#loader').fadeOut()
-  } else {
-    document.getElementById('loader').style.display = 'none'
+require('es6-promise').polyfill()
+;(function() {
+  const timeout = 10 * 1000
+  const start = Date.now()
+
+  loadDeferredStyles(timeout)
+    .then(() => {
+      const now = Date.now()
+      const spent = now - start
+      return onReady(timeout - spent)
+    })
+    .then(hideLoader)
+    .catch(hideLoader)
+
+  function loadDeferredStyles(timeout) {
+    const deferredStylesNode = document.getElementById('deferred-styles')
+    const node = document.createElement('div')
+    node.innerHTML = deferredStylesNode.textContent
+    const links = node.getElementsByTagName('link')
+
+    const promises = []
+    for (let i = 0; i < links.length; i++) {
+      promises.push(loadLink(links[i]))
+    }
+
+    const loadPromise = Promise.all(promises).then(() =>
+      deferredStylesNode.parentElement.removeChild(deferredStylesNode)
+    )
+
+    const timeoutPromise = new Promise((resolve, reject) => {
+      const timer = setTimeout(() => {
+        clearTimeout(timer)
+        reject(`Stylesheet loading timed out`)
+      }, timeout)
+    })
+
+    return Promise.race([loadPromise, timeoutPromise])
   }
-}
 
-function loadDeferredStyles() {
-  var addStylesNode = document.getElementById('deferred-styles')
-  var replacement = document.createElement('div')
-  replacement.innerHTML = addStylesNode.textContent
-  var link = replacement.firstChild
-  link.onload = hideLoader
-  document.body.appendChild(link)
-  addStylesNode.parentElement.removeChild(addStylesNode)
-}
+  function loadLink(link) {
+    return new Promise(resolve => {
+      link.onload = resolve
+      document.head.appendChild(link)
+    })
+  }
 
-if (document.readyState === 'complete') {
-  loadDeferredStyles()
-} else {
-  window.addEventListener('load', loadDeferredStyles)
-}
+  function onReady(timeout) {
+    const loadPromise = new Promise(resolve => {
+      if (document.readyState === 'complete') {
+        resolve()
+      } else {
+        window.addEventListener('load', resolve)
+      }
+    })
+
+    const timeoutPromise = new Promise((resolve, reject) => {
+      const timer = setTimeout(() => {
+        clearTimeout(timer)
+        reject(`Window loading timed out`)
+      }, timeout)
+    })
+
+    return Promise.race([loadPromise, timeoutPromise])
+  }
+
+  function hideLoader() {
+    if (window.jQuery) {
+      $('#loader').fadeOut(600)
+      $('body').css('overflow', 'visible')
+    } else {
+      document.querySelector('#loader').style.display = 'none'
+      document.querySelector('body').style.overflow = 'visible'
+    }
+  }
+})()

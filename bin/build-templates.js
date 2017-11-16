@@ -18,6 +18,7 @@ const pugVariables = {
   basedir: config.tmpDir,
   title: config.title,
   description: config.description,
+  url: config.url,
   shareFacebook: url.resolve(config.url, config.share.facebook),
   shareTwitter: url.resolve(config.url, config.share.twitter),
   stylesFile: path.join(config.styles.outputDir, config.styles.outputFile),
@@ -88,7 +89,9 @@ function compileFile(file, done) {
       }
       const htmlFile = path.basename(file, '.pug') + '.html'
       const outputFile = path.join(outputDir, htmlFile)
-      writeFile(outputFile, html).then(done).catch(done)
+      writeFile(outputFile, html)
+        .then(done)
+        .catch(done)
     } catch (error) {
       done(error)
     }

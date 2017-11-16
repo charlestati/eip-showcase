@@ -11,15 +11,32 @@ html(lang='fr')
     meta(name='msapplication-tap-highlight', content='no')
     // Color the status bar on mobile devices
     meta(name='theme-color', content=themeColor)
-    include /html/favicons.html
+    //include /html/favicons.html
     style
       include /styles/inline.css
     noscript#deferred-styles
       link(rel='stylesheet', href=stylesFile)
     script
       include /scripts/inline.js
+    style
+      include /styles/inline.css
+    noscript
+      style.
+        body {
+          overflow: visible;
+        }
+
+        #loader {
+          display: none;
+        }
+    //link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Montserrat')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Montserrat:400,700')
   body
     #loader
+      .loader-icon
+        svg.circle(viewbox="25 25 50 50")
+          circle.path(cx="50", cy="50", r="20", fill="none", stroke-width="2", stroke-miterlimit="10")
+
     block content
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js', defer)
     script(src=scriptsFile, defer)

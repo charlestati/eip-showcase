@@ -1,4 +1,5 @@
-import './vendor/bootstrap/collapse'
+import Collapse from './vendor/bootstrap/collapse'
+import { handleAnchors } from './type'
 
 function run() {
   handleAnchors()

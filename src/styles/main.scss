@@ -1,95 +1,213 @@
-// Core variables and mixins
+@import "vendor/bootstrap/functions";
 @import "vendor/bootstrap/variables";
-@import "vendor/bootstrap/mixins";
-// Custom variables
 @import "variables";
-// Reset and dependencies
-@import "vendor/bootstrap/normalize";
+@import "vendor/bootstrap/mixins";
+@import "vendor/bootstrap/root";
 @import "vendor/bootstrap/print";
-// Core CSS
 @import "vendor/bootstrap/reboot";
 @import "vendor/bootstrap/type";
 @import "vendor/bootstrap/images";
 @import "vendor/bootstrap/grid";
-// Components
+@import "vendor/bootstrap/buttons";
 @import "vendor/bootstrap/transitions";
 @import "vendor/bootstrap/nav";
 @import "vendor/bootstrap/navbar";
-// Utility classes
 @import "vendor/bootstrap/utilities";
 
-body {
-  overflow: visible;
+.section {
+  position: relative;
+}
+
+section#accueil {
+  background-color: $biscay;
 }
 
 .navbar {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-}
-
-.navbar-logo {
-  svg {
-    width: auto;
-    height: 30px;
-    vertical-align: middle;
+  .navbar-toggler {
+    border: none;
+    margin: 1rem 2rem;
   }
 
-  path {
-    fill: #f4f4f4;
-  }
-}
+  .navbar-brand {
+    margin: 1rem 2rem;
 
-.section {
-  height: 100vh;
-}
+    svg {
+      width: auto;
+      height: 30px;
+      vertical-align: middle;
+    }
 
-.section-1 {
-  background: linear-gradient(60deg, #e62f17 0%, #f2bb30 100%) no-repeat scroll center center/cover;
-}
-
-.section-2 {
-  background: linear-gradient(60deg, #0a3466 0%, #17b9e6 100%) no-repeat scroll center center/cover;
-}
-
-.section-3 {
-  background: linear-gradient(60deg, #17b9e6 0%, #82d9b8 100%) no-repeat scroll center center/cover;
-}
-
-@media (min-width: 992px) {
-  .navbar-toggleable-md .navbar-nav .nav-link {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-.footer {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-  background-color: #f6f9fc;
-}
-
-.navbar-nav .nav-item .nav-link {
-  position: relative;
-
-  &:before {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    color: transparent;
-    content: '•';
-    text-shadow: 0 0 transparent;
-    font-size: 1.2em;
-    transition: text-shadow 0.3s, color 0.3s;
-    transform: translateX(-50%);
-    pointer-events: none;
-  }
-
-  @include hover-focus {
-    &:before {
-      color: #fff;
-      text-shadow: 10px 0 #fff, -10px 0 #fff;
+    @include media-breakpoint-up(lg) {
+      margin-left: 66px;
     }
   }
+
+  .navbar-nav {
+    .nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background-color: #1a284d;
+      font-size: 0.9rem;
+      font-weight: 700;
+      transition: color 1s $easeCurve;
+
+      &.active {
+        background-color: #1d2d56;
+      }
+
+      @include media-breakpoint-up(lg) {
+        height: 94px;
+        padding: 0 2rem;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding: 0;
+  }
+}
+
+.btn-icon {
+  display: flex;
+  height: 80px;
+  background-color: $white;
+  padding: 0;
+  border: none;
+
+  .btn-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 90px);
+    height: 100%;
+    font-weight: 700;
+    color: $chambray;
+  }
+
+  .btn-arrow {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 100%;
+    background-color: #eff3f9;
+    overflow: hidden;
+
+    &:before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: $mango-tango;
+      transform: translate(0, -100%);
+      transition: transform 1s $easeCurve;
+    }
+
+    svg {
+      position: relative;
+
+      g {
+        fill: $danube;
+        transition: fill 1s $easeCurve;
+      }
+    }
+  }
+
+  @include hover-focus-active {
+    text-decoration: none;
+
+    .btn-arrow {
+      &:before {
+        transform: translate(0, 0);
+      }
+
+      svg g {
+        fill: #ffffff;
+      }
+    }
+  }
+}
+
+.btn-know-more {
+  width: 100%;
+  max-width: 310px;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 94px - 80px);
+  min-height: 300px;
+
+  .headline {
+    color: #ffffff;
+    font-size: 4vw;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 3rem;
+  }
+
+  .bike-icon {
+    width: 40vmin;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+section#projet {
+  background-color: #f2f5fa;
+}
+
+section#projet .content {
+  padding-top: 10vh;
+  padding-bottom: 20vh;
+}
+
+.title {
+  color: #3a478f;
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin-top: 4rem;
+  margin-bottom: 3rem;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #627792;
+}
+
+.sidebar-wrapper {
+  max-width: 310px;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  background-color: $white;
+
+  .nav-link {
+    color: $biscay;
+    font-weight: 700;
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+
+    @include hover-focus {
+      color: $danube;
+    }
+  }
+}
+
+section#jeux,
+section#applications {
+  background-color: $white;
 }

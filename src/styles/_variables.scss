@@ -1,4 +1,19 @@
-$navbar-padding-y: 20px;
+$biscay: #203260;
+$lynch: #687aa8;
+$mango-tango: #ff7f40;
+$chambray: #3a478f;
+$danube: #608ad8;
+
+$enable-rounded: false;
+
+$body-bg: $biscay;
+
+$navbar-padding-x: 0;
+$navbar-padding-y: 0;
+$navbar-dark-color: $lynch;
+$navbar-dark-hover-color: $white;
+$navbar-dark-active-color: $white;
+$navbar-dark-toggler-icon-bg: str-replace(url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='#{$white}' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"), "#", "%23");
 
 $container-max-widths: (
   sm: 540px,
@@ -8,7 +23,6 @@ $container-max-widths: (
 );
 @include _assert-ascending($container-max-widths, "$container-max-widths");
 
-$font-size-base: 1.08rem;
+$easeCurve: cubic-bezier(0.19, 1, 0.22, 1);
 
-$navbar-inverse-color: rgba($white, 1);
-$navbar-inverse-hover-color: rgba($white, 1);
+$font-family-base: "Montserrat", $font-family-sans-serif;
