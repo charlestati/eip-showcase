@@ -7,7 +7,7 @@ function handleAnchors() {
         {
           scrollTop: $(href).offset().top,
         },
-        500
+        600
       )
       return false
     })

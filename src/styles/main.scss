@@ -18,26 +18,104 @@
   position: relative;
 }
 
-section#accueil {
+.section-dark {
   background-color: $biscay;
+  color: $white;
+}
+
+.section-light {
+  background-color: $catskill-white;
+  color: $waikawa-gray;
+}
+
+.section-white {
+  background-color: $white;
+  color: $waikawa-gray;
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+
+  @include media-breakpoint-up(sm) {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: 2.6rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.section-dark .title {
+  color: $white;
+}
+
+.section-light .title {
+  color: $chambray;
+}
+
+.section-white .title {
+  color: $chambray;
+}
+
+img.title {
+  max-height: 2.2rem;
+
+  @include media-breakpoint-up(sm) {
+    max-height: 2rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    max-height: 2.6rem;
+  }
+}
+
+.section-splitted p {
+  font-size: 1.1rem;
+
+  @include media-breakpoint-up(md) {
+    font-size: 1rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: 1.1rem;
+  }
 }
 
 .navbar {
+  height: 62px;
+
+  @include media-breakpoint-up(lg) {
+    height: auto;
+  }
+
   .navbar-toggler {
     border: none;
-    margin: 1rem 2rem;
+    padding: 1rem 2rem;
+
+    @include hover-focus-active {
+      outline: none;
+    }
   }
 
   .navbar-brand {
-    margin: 1rem 2rem;
+    padding: 1rem 2rem;
 
-    svg {
-      width: auto;
-      height: 30px;
-      vertical-align: middle;
+    .navbar-logo {
+      height: 1.85rem;
+
+      svg {
+        width: auto;
+        height: 100%;
+        vertical-align: middle;
+      }
     }
 
     @include media-breakpoint-up(lg) {
+      padding-left: 0;
       margin-left: 66px;
     }
   }
@@ -59,13 +137,53 @@ section#accueil {
 
       @include media-breakpoint-up(lg) {
         height: 94px;
-        padding: 0 2rem;
+        padding: 0 1.5rem;
+      }
+
+      @include media-breakpoint-up(xl) {
+        padding-left: 2rem;
+        padding-right: 2rem;
       }
     }
   }
 
   @include media-breakpoint-up(lg) {
     padding: 0;
+  }
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 62px - 80px);
+  min-height: 400px;
+
+  @include media-breakpoint-up(lg) {
+    height: calc(100vh - 94px - 80px);
+  }
+
+  .headline {
+    color: #ffffff;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 3rem;
+
+    @include media-breakpoint-up(lg) {
+      font-size: 4vw;
+    }
+  }
+
+  .bike-icon {
+    width: 40vmin;
+    height: 40vmin;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 
@@ -133,81 +251,106 @@ section#accueil {
 
 .btn-know-more {
   width: 100%;
-  max-width: 310px;
-}
 
-.hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: calc(100vh - 94px - 80px);
-  min-height: 300px;
-
-  .headline {
-    color: #ffffff;
-    font-size: 4vw;
-    text-align: center;
-    font-weight: 700;
-    margin-bottom: 3rem;
+  @include media-breakpoint-up(sm) {
+    max-width: 310px;
   }
-
-  .bike-icon {
-    width: 40vmin;
-
-    svg {
-      width: 100%;
-      height: 100%;
-    }
-  }
-}
-
-section#projet {
-  background-color: #f2f5fa;
-}
-
-section#projet .content {
-  padding-top: 10vh;
-  padding-bottom: 20vh;
-}
-
-.title {
-  color: #3a478f;
-  font-size: 2.6rem;
-  font-weight: 700;
-  margin-top: 4rem;
-  margin-bottom: 3rem;
-}
-
-p {
-  font-size: 1.2rem;
-  color: #627792;
 }
 
 .sidebar-wrapper {
-  max-width: 310px;
-}
+  @include media-breakpoint-up(sm) {
+    max-width: 310px;
+  }
 
-.sidebar {
-  position: sticky;
-  top: 0;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  background-color: $white;
+  .sidebar {
+    position: sticky;
+    top: 0;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    background-color: $white;
 
-  .nav-link {
-    color: $biscay;
-    font-weight: 700;
-    padding-top: 0.8em;
-    padding-bottom: 0.8em;
+    .nav-link {
+      color: $chambray;
+      font-weight: 700;
+      padding-top: 0.8em;
+      padding-bottom: 0.8em;
+      transition: color 1s $easeCurve;
 
-    @include hover-focus {
-      color: $danube;
+      @include hover-focus {
+        color: $danube;
+      }
     }
   }
 }
 
-section#jeux,
-section#applications {
-  background-color: $white;
+.side-content {
+  padding-top: 1rem;
+  padding-bottom: 5rem;
+
+  @include media-breakpoint-up(md) {
+    padding-top: 5rem;
+    padding-bottom: 10rem;
+  }
+
+  .title {
+    margin-top: 5rem;
+  }
+}
+
+.introduction-logo {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+
+  @include media-breakpoint-up(md) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+a[href='#'] {
+  pointer-events: none;
+}
+
+.download-badge {
+  max-height: 3rem;
+}
+
+.py-6 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.footer {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background-color: $biscay;
+  color: $white;
+
+  .nav-link {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $white;
+    transition: color 1s $easeCurve;
+
+    @include hover-focus-active {
+      color: #6982c0;
+    }
+  }
+}
+
+.footnote {
+  color: #7b8db9;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.footer-logo {
+  height: 2.2rem;
+
+  svg {
+    width: auto;
+    height: 100%;
+    vertical-align: middle;
+  }
 }

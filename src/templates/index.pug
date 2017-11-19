@@ -1,71 +1,142 @@
 extends includes/layout
 
 block content
-  section#accueil.section
+  section#accueil.section.section-dark
     nav.navbar.navbar-expand-lg.navbar-dark
-      a.navbar-brand(href='#')
+      a.navbar-brand(href='#accueil')
         .navbar-logo
           include /svg/logo.svg
-      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar-nav', aria-controls='navbar-nav', aria-expanded='false', aria-label='Toggle navigation')
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar-nav', aria-controls='navbar-nav', aria-expanded='false', aria-label='Afficher le menu')
         span.navbar-toggler-icon
       #navbar-nav.collapse.navbar-collapse
         ul.navbar-nav.ml-auto
           li.nav-item
             a.nav-link.active(href='#accueil') Accueil
           li.nav-item
-            a.nav-link(href='#projet') À propos
+            a.nav-link(href='#introduction') À&nbsp;propos
           li.nav-item
-            a.nav-link(href='#jeux') Jeux
-          li.nav-item
-            a.nav-link(href='#applications') Applications
+            a.nav-link(href='#equipe') Équipe
           li.nav-item
             a.nav-link(href='#hardware') Hardware
+          li.nav-item
+            a.nav-link(href='#application') Application
+          li.nav-item
+            a.nav-link(href='#jeux') Jeux
     .hero.container
       h1.headline Faire du sport en s'amusant
       .bike-icon
         include /svg/bike.svg
     .row.no-gutters
       .col-sm-6.col-md-5.col-lg-4
-        a.btn.btn-icon.btn-know-more.link-anchor(href='#equipe')
+        a.btn.btn-icon.btn-know-more(href='#introduction')
           span.btn-text
             span En savoir plus
           span.btn-arrow
             include /svg/arrow.svg
-  section#projet.section
+  section#introduction.section.section-light
     .row.no-gutters
-      .col-sm-6.col-md-5.col-lg-4.sidebar-wrapper
-        nav.nav.flex-column.sidebar
-          .row.no-gutters
-            .offset-2.col-10
-              a.nav-link.active(href='#') Epitech
-              a.nav-link(href='#') EIP
-              a.nav-link(href='#') EIP
-              a.nav-link(href='#') EIP
-      .offset-lg-1.col-lg-6
-        .container.content
-          h2.title École pour l'informatique et les nouvelles technologies
-          p Epitech est une école d'informatique créée en 1999. Elle forme au métier d'Expert en Technologies de l'Information via une pédagogie innovante organisée en projets.
-          h2.title Epitech Innovative Project
-          p L'Epitech Innovative Project (EIP) est un projet entrepreneurial réalisé en groupe sanctionnant cinq années d'études à l'école Epitech. Il permet de se former sur les différentes composantes d'une entreprise : un business plan viable, un design attirant, une stratégie marketing efficace…
-          p L'EIP a deux buts : acquérir une expérience de gestion de projet par la pratique et constituer une carte de visite professionnelle.
-  section#jeux.section
-    .row.no-gutters
+      .col-sm-6.col-md-5.col-lg-4.d-none.d-lg-block.sidebar-wrapper
+        .sidebar
+          .container-fluid
+            .row
+              .offset-2.col-10
+                nav.nav.flex-column
+                  a.nav-link.active(href='#epitech') Epitech
+                  a.nav-link(href='#eip') EIP
+                  a.nav-link(href='#sportsfun') SportsFun
+      .offset-lg-1.col-lg-7
+        .container.side-content
+          .row
+            .col-12
+              h2#epitech.title École pour l'informatique et les nouvelles technologies
+          .row
+            .col-12.col-md-8.order-2.order-md-1
+              p.mb-0 Epitech est une école d'informatique créée en 1999. Elle forme au métier d'Expert en Technologies de l'Information via une pédagogie innovante organisée en projets.
+            .offset-2.col-8.offset-md-1.col-md-3.order-1.order-md-2
+              img.img-fluid.introduction-logo(src='images/epitech.png', alt='Logo d\'Epitech')
+          .row
+            .col-12
+              h2#eip.title Epitech Innovative Project
+              p Un EIP est un projet entrepreneurial réalisé en groupe sanctionnant cinq années d'études à Epitech. Toutes les différentes composantes d'une entreprise sont réunies : la stratégie marketing, le prototypage, le design, la communication…
+              p.mb-0 Il permet d'acquérir une expérience de gestion de projet par la pratique et de constituer une carte de visite professionnelle.
+          .row
+            .col-12
+              img#sportsfun.img-fluid.title(src='images/sportsfun.png', alt='Logo de SportsFun')
+          .row
+            .col-12
+              p Le marché du sport ne cesse de croître et la fidélisation des clients est l'une des principales problématiques auxquelles les salles de sport sont confrontées.
+              p
+                strong Notre objectif est de fidéliser la clientèle des salles de sport en France.
+              p.mb-0 Pour cela, nos produits permettent d'une part de motiver les abonnés à venir en salle et d'autre part de les amener à suivre un programme sportif de qualité afin d'obtenir des résultats visibles et encourageant.
+  section#equipe.section.section-dark.section-splitted
+    .row.no-gutters.align-items-center
+      .col-12.col-md-6
+        img.img-fluid(src='images/team.jpeg', alt='L\'équipe')
+      .col-12.col-md-6
+        .container
+          .row
+            .col-12.offset-lg-2.col-lg-8.py-6.py-md-0
+              h2.title L'équipe
+              p Au total, huit personnes font partie de l'équipe SportsFun. Trois personnes s'occupent du hardware et cinq travaillent sur les jeux vidéo et l'application.
+              p.mb-0 Les membres de l'équipe travaillent à distance depuis quatre pays différents : le Canada, l'Irlande, la Roumanie et la Corée du Sud.
+  section#hardware.section.section-white.section-splitted
+    .row.no-gutters.align-items-center
+      .col-md-6.order-2.order-md-1
+        .container
+          .row
+            .col-12.offset-lg-2.col-lg-8.py-6.py-md-0
+              h2.title Le hardware
+              p À l'aide d'un micro-ordinateur, la vitesse d'un vélo droit est transmise à une tablette tactile puis utilisée dans des jeux vidéo.
+              p.mb-0 La vitesse est également enregistrée et analysée afin d'offrir à l'utilisateur un suivi détaillé de ses performances.
+      .col-md-6.order-1.order-md-2
+        img.img-fluid(src='images/hardware.jpeg', alt='Raspberry Pi')
+  section#application.section.section-dark.section-splitted
+    .row.no-gutters.align-items-center
       .col-md-6
-        img.img-fluid(src='images/placeholder.png', alt='Placeholder')
+        img.img-fluid(src='images/application.jpeg', alt='Application')
       .col-md-6
-        p text
-  section#applications.section
-    .row.no-gutters
-      .col-md-6
-        p text
-      .col-md-6
-        img.img-fluid(src='images/placeholder.png', alt='Placeholder')
-  section#hardware.section
-    .container-fluid
-      .row
-        .col-md-6
-          p image
-        .col-md-6
-          p text
+        .container
+          .row
+            .col-12.offset-lg-2.col-lg-8.py-6.py-md-0
+              h2.title L'application
+              p Grâce à un site et une application disponible sur Android et iOS, nos utilisateurs ont toujours accès à un suivi détaillé de leurs performances.
+              p Un coach sportif peut faire un retour après chaque séance et préconiser un programme adapté.
+              .d-flex.justify-content-center.justify-content-md-start
+                div.mt-3.mt-md-0.mt-lg-3.mr-3
+                  a(href='#')
+                    img.img-fluid.download-badge(src='images/appstore.png', alt='Disponible sur l\'App Store')
+                div.mt-3.mt-md-0.mt-lg-3
+                  a(href='#')
+                    img.img-fluid.download-badge(src='images/googleplay.png', alt='Disponible sur Google Play')
+  section#jeux.section.section-white.section-splitted
+    .row.no-gutters.align-items-center
+      .col-md-6.order-2.order-md-1
+        .container
+          .row
+            .col-12.offset-lg-2.col-lg-8.py-6.py-md-0
+              h2.title Les jeux
+              p Nous développons un ensemble de jeux vidéo dont l'environnement est généré en fonction du programme sélectionné par l'utilisateur.
+              p.mb-0 Ces jeux sont jouables depuis une tablette fixée au guidon du vélo droit et utilisent la vitesse du vélo pour effectuer diverses actions en jeu.
+      .col-md-6.order-1.order-md-2
+        img.img-fluid(src='images/games.jpeg', alt='Jeux sur tablette')
   footer.footer
-    p by Bernar Novalyi from the Noun Project
+    .container
+      .d-flex.justify-content-center
+        a(href='#accueil')
+          .footer-logo
+            include /svg/logo.svg
+      ul.nav.justify-content-center.mt-4.mb-5
+        li.nav-item
+          a.nav-link(href='#accueil') Accueil
+        li.nav-item
+          a.nav-link(href='#introduction') À&nbsp;propos
+        li.nav-item
+          a.nav-link(href='#equipe') Équipe
+        li.nav-item
+          a.nav-link(href='#hardware') Hardware
+        li.nav-item
+          a.nav-link(href='#application') Application
+        li.nav-item
+          a.nav-link(href='#jeux') Jeux
+      .d-flex.justify-content-center
+        p.mb-0.footnote L'icône du vélo droit a été créée par Bernar Novalyi pour Noun Project
