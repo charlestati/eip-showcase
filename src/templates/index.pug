@@ -35,7 +35,7 @@ block content
             include /svg/arrow.svg
   section#introduction.section.section-light
     .row.no-gutters
-      .col-sm-6.col-md-5.col-lg-4.d-none.d-lg-block.sidebar-wrapper
+      .col-sm-6.col-md-5.col-lg-4.d-none.d-xl-block.sidebar-wrapper
         .sidebar
           .container-fluid
             .row
@@ -44,7 +44,7 @@ block content
                   a.nav-link.active(href='#epitech') Epitech
                   a.nav-link(href='#eip') EIP
                   a.nav-link(href='#sportsfun') SportsFun
-      .offset-lg-1.col-lg-7
+      .offset-lg-2.col-lg-8.offset-xl-1.col-xl-7
         .container.side-content
           .row
             .col-12
@@ -119,6 +119,24 @@ block content
               p.mb-0 Ces jeux sont jouables depuis une tablette fixée au guidon du vélo droit et utilisent la vitesse du vélo pour effectuer diverses actions en jeu.
       .col-md-6.order-1.order-md-2
         img.img-fluid(src='images/games.jpeg', alt='Jeux sur tablette')
+  section#contact.section.section-light
+    .container.container-narrow
+      h2.title Nous contacter
+      form.contact-form
+        .form-row
+          .col-md-6
+            .form-group
+              label(for='contact-email') Adresse email
+              input#contact-email.form-control(type='email', name='email', required)
+        .form-row
+          .col-12
+            .form-group
+              label(for='contact-message') Message
+              textarea#contact-message.form-control(rows='3', name='message', required)
+        p.form-success Message envoyé.
+        p.form-failure Envoi impossible. Réessayez plus tard.
+        button.btn.btn-rounded.mt-3.btn-submit(type='submit')
+          span.btn-text Envoyer
   footer.footer
     .container
       .d-flex.justify-content-center
@@ -138,5 +156,6 @@ block content
           a.nav-link(href='#application') Application
         li.nav-item
           a.nav-link(href='#jeux') Jeux
-      .d-flex.justify-content-center
-        p.mb-0.footnote L'icône du vélo droit a été créée par Bernar Novalyi pour Noun Project
+      .d-flex.flex-column.justify-content-center
+        p.mb-4.footnote L'icône du vélo droit a été créée par Bernar Novalyi pour Noun Project
+        p.mb-0.copyright © 2017 SportsFun

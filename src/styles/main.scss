@@ -8,6 +8,7 @@
 @import "vendor/bootstrap/type";
 @import "vendor/bootstrap/images";
 @import "vendor/bootstrap/grid";
+@import "vendor/bootstrap/forms";
 @import "vendor/bootstrap/buttons";
 @import "vendor/bootstrap/transitions";
 @import "vendor/bootstrap/nav";
@@ -120,6 +121,10 @@ img.title {
     }
   }
 
+  .navbar-collapse {
+    z-index: 10;
+  }
+
   .navbar-nav {
     .nav-link {
       display: flex;
@@ -159,6 +164,7 @@ img.title {
   justify-content: center;
   height: calc(100vh - 62px - 80px);
   min-height: 400px;
+  transition: height 600ms ease;
 
   @include media-breakpoint-up(lg) {
     height: calc(100vh - 94px - 80px);
@@ -179,6 +185,7 @@ img.title {
   .bike-icon {
     width: 40vmin;
     height: 40vmin;
+    transition: width 300ms ease, height 300ms ease;
 
     svg {
       width: 100%;
@@ -288,6 +295,11 @@ img.title {
   padding-bottom: 5rem;
 
   @include media-breakpoint-up(md) {
+    padding-top: 2rem;
+    padding-bottom: 7rem;
+  }
+
+  @include media-breakpoint-up(lg) {
     padding-top: 5rem;
     padding-bottom: 10rem;
   }
@@ -321,10 +333,15 @@ a[href='#'] {
 }
 
 .footer {
-  padding-top: 8rem;
-  padding-bottom: 8rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
   background-color: $biscay;
   color: $white;
+
+  @include media-breakpoint-up(lg) {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
 
   .nav-link {
     font-size: 1rem;
@@ -340,8 +357,7 @@ a[href='#'] {
 
 .footnote {
   color: #7b8db9;
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 0.8rem;
   text-align: center;
 }
 
@@ -353,4 +369,63 @@ a[href='#'] {
     height: 100%;
     vertical-align: middle;
   }
+}
+
+.container-narrow {
+  max-width: 720px;
+}
+
+#contact {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+
+  @include media-breakpoint-up(md) {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+  }
+}
+
+#contact form .btn-rounded {
+  cursor: pointer;
+}
+
+#contact {
+  label {
+    color: #385190;
+  }
+}
+
+.btn-rounded {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 60px;
+  max-width: 100%;
+  border-radius: 60px;
+  background-color: $mango-tango;
+  color: $white;
+  font-weight: 700;
+  transition: background-color 1s $easeCurve;
+
+  @include hover-focus-active {
+    background-color: darken($mango-tango, 10%);
+  }
+}
+
+.form-success,
+.form-failure {
+  display: none;
+  color: #9ba5be;
+}
+
+.copyright {
+  color: $white;
+  font-size: 0.8rem;
+  text-align: center;
 }
