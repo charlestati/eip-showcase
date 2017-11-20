@@ -8,7 +8,7 @@ const language = 'fr-FR'
 
 const sourceDir = 'src/'
 const tmpDir = '.tmp/'
-const distDir = 'dist/'
+const distDir = 'docs/'
 
 const fontsDir = 'fonts/'
 const htmlDir = 'html/'
