@@ -16,7 +16,9 @@ const argv = yargs.argv
 if (argv.watch) {
   watch()
 } else if (argv.minify) {
-  minifyAllSvg()
+  // todo Les shapes sont converties en path
+  // minifyAllSvg()
+  copyAllSvg()
 } else {
   copyAllSvg()
 }

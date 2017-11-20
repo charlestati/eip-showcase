@@ -1,3 +1,5 @@
+import $ from 'jquery'
+
 export const handleContactForm = () => {
   $('.contact-form').on('submit', () => {
     const $email = $('#contact-email')

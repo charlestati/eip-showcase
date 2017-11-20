@@ -1,6 +1,3 @@
-const chalk = require('chalk')
-const figures = require('figures')
-
 const { logInfo, logSuccess, logError } = require('./logging-tools')
 const { removeFile } = require('./fs-tools')
 
@@ -10,7 +7,7 @@ clean()
 
 function clean() {
   logInfo('Cleaning app')
-  const files = [config.distDir, config.tmpDir]
+  const files = [config.tmpDir]
   Promise.all(files.map(removeFile))
     .then(() => {
       logSuccess('App cleaned')

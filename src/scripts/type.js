@@ -1,3 +1,5 @@
+import $ from 'jquery'
+
 export const handleAnchors = () => {
   $('a[href*="#"]')
     .not('[href="#"]')

@@ -1,3 +1,4 @@
+// todo Utiliser Google pour jQuery
 import './vendor/bootstrap/collapse'
 import { handleAnchors } from './type'
 import { handleContactForm } from './contact'

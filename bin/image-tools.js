@@ -8,6 +8,8 @@ const imageminPlugins = [
   imageminPngquant({ quality: '90-100' }),
 ]
 
+const svgoPlugins = [{ removeViewBox: false, convertShapeToPath: false }]
+
 function minifyImageFiles(files, outputDir) {
   return imagemin(files, outputDir, {
     plugins: imageminPlugins,
@@ -24,7 +26,7 @@ function minifySvgFiles(files, outputDir) {
   return imagemin(files, outputDir, {
     use: [
       imageminSvgo({
-        plugins: [{ removeViewBox: false }],
+        plugins: svgoPlugins,
       }),
     ],
   })
